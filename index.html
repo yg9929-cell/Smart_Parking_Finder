@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Parking Finder - find parking locations and check live space availability and charges." />
+  <title>Smart Parking Finder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="logo" aria-label="Smart Parking Finder home">
+        <span class="logo-mark">P</span>
+        <span class="logo-text">Smart<span>Park</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#home">Home</a>
+        <a href="#finder">Find Parking</a>
+        <a href="#how">How it works</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <span class="badge">Live availability &bull; Transparent pricing</span>
+          <h1>Smart Parking <em>Finder</em></h1>
+          <p>
+            Stop circling the block. Browse nearby parking locations, see how many
+            spaces are free right now, compare hourly charges and pick the spot that
+            fits your trip &mdash; all in one place.
+          </p>
+          <div class="hero-actions">
+            <a href="#finder" class="btn btn-primary">Find parking now</a>
+            <a href="#how" class="btn btn-ghost">How it works</a>
+          </div>
+        </div>
+
+        <div class="hero-card" aria-hidden="true">
+          <div class="hero-card-top">
+            <span class="dot dot-green"></span> Live overview
+          </div>
+          <div class="hero-stats">
+            <div><strong id="statLocations">0</strong><span>Locations</span></div>
+            <div><strong id="statAvailable">0</strong><span>Free spaces</span></div>
+            <div><strong id="statOccupied">0</strong><span>Occupied</span></div>
+          </div>
+          <div class="hero-bar"><div class="hero-bar-fill" id="heroBar"></div></div>
+          <p class="hero-note"><span id="statPercent">0</span>% of all spaces are free right now</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Finder ===== -->
+    <section class="finder" id="finder">
+      <div class="container">
+        <div class="section-head">
+          <h2>Find a parking location</h2>
+          <p>Search by name, filter by availability and select a location to see full details.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm9 16-4.3-4.3"/></svg>
+            <input type="search" id="searchInput" placeholder="Search parking by name or area..." autocomplete="off" aria-label="Search parking locations" />
+            <button class="clear-btn" id="clearSearch" aria-label="Clear search" hidden>&times;</button>
+          </div>
+
+          <div class="sort-box">
+            <label for="sortSelect">Sort by</label>
+            <select id="sortSelect">
+              <option value="name">Name (A-Z)</option>
+              <option value="available">Most available</option>
+              <option value="price-low">Price: low to high</option>
+              <option value="price-high">Price: high to low</option>
+            </select>
+          </div>
+
+          <button class="btn btn-outline" id="refreshBtn" title="Simulate a live availability update">
+            &#8635; Refresh availability
+          </button>
+        </div>
+
+        <div class="filters" id="filters" role="group" aria-label="Filter by availability">
+          <button class="chip active" data-filter="all">All <span class="count" data-count="all">0</span></button>
+          <button class="chip" data-filter="available">Available <span class="count" data-count="available">0</span></button>
+          <button class="chip" data-filter="limited">Almost full <span class="count" data-count="limited">0</span></button>
+          <button class="chip" data-filter="full">Full <span class="count" data-count="full">0</span></button>
+        </div>
+
+        <p class="result-info" id="resultInfo" aria-live="polite"></p>
+
+        <div class="grid" id="parkingGrid"></div>
+
+        <div class="empty" id="emptyState" hidden>
+          <div class="empty-icon">&#128663;</div>
+          <h3>No parking locations found</h3>
+          <p>Try a different name or change the availability filter.</p>
+          <button class="btn btn-primary" id="resetBtn">Reset search &amp; filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== How it works ===== -->
+    <section class="how" id="how">
+      <div class="container">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>Three simple steps to a stress-free parking experience.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><span class="step-no">1</span><h3>Search</h3><p>Type a location name or browse the full list of parking areas.</p></div>
+          <div class="step"><span class="step-no">2</span><h3>Compare</h3><p>Check free spaces and hourly and daily charges at a glance.</p></div>
+          <div class="step"><span class="step-no">3</span><h3>Select</h3><p>Open a location for full details, estimate your cost and reserve a space.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Smart Parking Finder &mdash; demo project using sample data.</p>
+    </div>
+  </footer>
+
+  <!-- ===== Details dialog ===== -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modal" tabindex="-1">
+      <button class="modal-close" id="modalClose" aria-label="Close details">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ===== Toast ===== -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
