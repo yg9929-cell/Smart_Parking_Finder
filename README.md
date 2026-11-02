@@ -30,3 +30,4 @@ Without the extension you can also double-click `index.html` to open it in any b
 - Reserve or cancel a space (availability updates instantly)
 - "Refresh availability" simulates live changes
 - Responsive for desktop and mobile
+# Smart_Parking_Finder
